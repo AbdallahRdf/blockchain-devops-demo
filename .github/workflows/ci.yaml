@@ -27,8 +27,8 @@ jobs:
     - name: Deploy to Sepolia
       if: github.ref == 'refs/heads/main'
       env:
-        INFURA_URL: ${{ secrets.INFURA_URL }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        SEPOLIA_RPC_URL: ${{ secrets.INFURA_URL }}
+        SEPOLIA_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       run: |
         echo "Deploying contract to Sepolia..."
         npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
