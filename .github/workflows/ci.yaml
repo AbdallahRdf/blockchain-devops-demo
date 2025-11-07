@@ -31,4 +31,4 @@ jobs:
         SEPOLIA_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       run: |
         echo "Deploying contract to Sepolia..."
-        npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
+        npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts --yes
