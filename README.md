@@ -1,57 +1,120 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+### 🪙 Blockchain DevOps Demo
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
+This project demonstrates how **DevOps principles** can be applied to **blockchain development** by automating the testing and deployment of an Ethereum smart contract using **GitHub Actions**.
+It showcases a CI/CD pipeline that runs tests automatically on every push and deploys the contract to the **Sepolia testnet** when changes are merged into the `main` branch.
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+---
 
-## Project Overview
+### ⚙️ Tech Stack
 
-This example project includes:
+| Component          | Purpose                                                                                 |
+| ------------------ | --------------------------------------------------------------------------------------- |
+| **Hardhat**        | Ethereum development environment for compiling, testing, and deploying smart contracts. |
+| **Solidity**       | Language used to write smart contracts.                                                 |
+| **TypeScript**     | Used for Hardhat configuration and scripts.                                             |
+| **Mocha / Chai**   | Testing framework for smart contracts.                                                  |
+| **GitHub Actions** | CI/CD pipeline automation (build, test, deploy).                                        |
+| **Infura**         | RPC provider for connecting to the Sepolia blockchain without running your own node.    |
+| **MetaMask**       | Wallet used to manage keys and hold SepoliaETH for deployment gas fees.                 |
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+---
 
-## Usage
+### 📂 Project Structure
 
-### Running Tests
+```
+blockchain-devops-demo/
+├── contracts/          # Solidity smart contracts
+│   └── Counter.sol
+├── ignition/           # Hardhat Ignition deployment modules
+│   └── modules/Counter.ts
+├── scripts/
+├── test/               # Mocha tests for the contract
+├── hardhat.config.ts   # Hardhat configuration file
+├── .github/workflows/  # GitHub Actions workflow (CI/CD)
+│   └── ci.yaml
+└── README.md
+```
 
-To run all the tests in the project, execute the following command:
+---
 
-```shell
+### 🚀 Setup Guide
+
+#### 1. Prerequisites
+
+* Node.js **v22 or later**
+* npm or yarn
+* MetaMask wallet (with **Sepolia network** selected)
+* Some **SepoliaETH** (from a faucet)
+* An **Infura account** and project endpoint
+
+#### 2. Clone the repository
+
+```bash
+git clone https://github.com/your-username/blockchain-devops-demo.git
+cd blockchain-devops-demo
+```
+
+#### 3. Install dependencies
+
+```bash
+npm install
+```
+
+#### 4. Configure environment variables
+
+Create a `.env` file in the project root and add:
+
+```bash
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID
+SEPOLIA_PRIVATE_KEY=your_wallet_private_key
+```
+
+> ⚠️ Never commit your private key. Use GitHub Secrets for CI/CD.
+
+#### 5. Compile and test
+
+```bash
+npx hardhat compile
 npx hardhat test
 ```
 
-You can also selectively run the Solidity or `mocha` tests:
+#### 6. Deploy locally (optional)
 
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
+```bash
+npx hardhat node
+npx hardhat ignition deploy --network localhost ignition/modules/Counter.ts
 ```
 
-### Make a deployment to Sepolia
+#### 7. Deploy to Sepolia manually
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
+```bash
 npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
 ```
+
+---
+
+### 🧩 CI/CD Pipeline
+
+The GitHub Actions workflow performs the following automatically:
+
+1. **Checkout code** on push or PR
+2. **Install dependencies**
+3. **Run tests** using Hardhat
+4. **Deploy** to Sepolia when changes are merged into `main`
+
+The workflow file: `.github/workflows/ci.yaml`
+It also sets the environment variable:
+
+```bash
+HARDHAT_IGNITION_CONFIRM_DEPLOYMENT=false
+```
+
+to skip manual confirmation during automated deployments.
+
+---
+
+### 🧠 Goal of the Demo
+
+* Show how **blockchain projects can benefit from DevOps** automation.
+* Demonstrate **continuous integration and deployment** for smart contracts.
+* Introduce the role of **RPC providers**, **testnets**, and **automation pipelines** in blockchain development.
