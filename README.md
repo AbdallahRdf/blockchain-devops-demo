@@ -62,6 +62,10 @@ npm install
 
 #### 4. Configure environment variables
 
+You have **two options** to securely provide your private key and RPC URL to Hardhat:
+
+
+##### **Option A — Using a `.env` file**
 Create a `.env` file in the project root and add:
 
 ```bash
@@ -70,6 +74,36 @@ SEPOLIA_PRIVATE_KEY=your_wallet_private_key
 ```
 
 > ⚠️ Never commit your private key. Use GitHub Secrets for CI/CD.
+
+##### **Option B — Using the Hardhat Keystore (recommended)**
+
+Hardhat provides an encrypted local keystore where you can securely store secrets.
+
+Store your private key:
+
+```bash
+npx hardhat keystore set SEPOLIA_PRIVATE_KEY
+```
+
+Store your RPC URL:
+
+```bash
+npx hardhat keystore set SEPOLIA_RPC_URL
+```
+
+List stored secrets:
+
+```bash
+npx hardhat keystore list
+```
+
+Remove a key:
+
+```bash
+npx hardhat keystore delete SEPOLIA_PRIVATE_KEY
+```
+
+This method keeps secrets out of .env files and makes setups more secure.
 
 #### 5. Compile and test
 
